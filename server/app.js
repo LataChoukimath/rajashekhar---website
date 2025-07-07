@@ -4,12 +4,16 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-app.use(cors());
+
+// ✅ Allow both local and live frontend to connect
+app.use(cors({
+  origin: ['http://localhost:5500', 'https://rajasekhar-website.vercel.app']
+}));
+
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
-// Default route to test API
 app.get('/', (req, res) => {
   res.send('✅ Rajasekhar & Associates API is running!');
 });
@@ -43,7 +47,6 @@ app.post('/contact', (req, res) => {
   });
 });
 
-// Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
